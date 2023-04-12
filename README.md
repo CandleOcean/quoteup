@@ -68,3 +68,79 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+---
+
+import { React, useState, useEffect} from 'react'
+import axios from 'axios'
+import './App.css'
+import ocean from'./oceaface.png'
+
+// https://jsonplaceholder.typicode.com/users
+// https://api.quotable.io/random
+// https://type.fit/api/quotes
+
+function App() {
+const [quotes, setQuotes] = useState([])
+const [quote, setQuote] = useState([])
+
+async function fetchData(){
+try {
+const response = await
+axios.get('https://api.quotable.io/random')
+setQuotes([response.data])
+} catch (error) {
+console.log(error)
+}  
+ }
+
+const getRandomQuote = (quotes) => {
+return quotes[Math.floor(Math.random() * quotes.length)]
+}
+const getNewQuote = () => {
+// return <h3>"{getRandomQuote(quotes)}"</h3>
+setQuote([getRandomQuote(quotes)])
+}
+
+useEffect(() => {
+fetchData()
+}, [])
+
+return (
+<section>
+<div className='head'>
+<img style = {{ marginTop: 10}} src={ocean} alt='programmer' width={60}/>
+<div className='picandcontent'>
+<h1><b>QUOTES GENERATOR</b></h1>
+<h2>Motivate yourself everyday with unending quotes</h2>
+</div>
+</div>
+
+      <div className='main'>
+      <h1>Nonet Quotes!</h1>
+      <button onClick={getNewQuote}>Fresh Quote!</button>
+      button ?
+      {quotes.map((quote, index) => {
+        return (
+          <div>
+            <h3 key = {index}>"{quote.content}"</h3>
+            <i>~{quote.author}</i>
+          </div>
+        )
+      })}
+      :
+      {quote.map((qt, id) => {
+        return (
+          <div>
+            <h3 key = {id}>"{qt.content}"</h3>
+            <i>~{qt.author}</i>
+          </div>
+        )
+      })}
+      </div>
+    </section>
+
+);
+}
+
+export default App;
