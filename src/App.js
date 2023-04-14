@@ -22,7 +22,7 @@ console.log(error)
 useEffect(() => {
   setInterval(() => {
     fetchData()
-  }, 5000)
+  }, 15000)
 }, [])
 
 return (
